@@ -9,6 +9,7 @@ Summary:        Citra is the world's most popular, open-source, 3DS emulator.
 License:        GPLv2
 URL:            https://github.com/citra-emu/citra-nightly
 Source0:        https://github.com/citra-emu/citra-nightly/releases/download/nightly-1920/citra-unified-source-20230607-238a574.tar.xz
+NoSource:       0
 
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
@@ -108,53 +109,11 @@ The Nightly build is based on the master branch, and contains already reviewed a
 The Canary build is based on the master branch, but with additional features still under review. PRs tagged canary-merge are merged only into the Canary builds.
 
 
-%prep
-%autosetup -p1 -n citra-unified-source-20230607-238a574
-
 
 %build
-rm -rf externals/boost/ externals/nihstro/
-git clone https://github.com/citra-emu/ext-boost.git externals/boost
-git clone https://github.com/neobrain/nihstro.git externals/nihstro
-rm -rf externals/soundtouch/ externals/catch2/
-git clone https://codeberg.org/soundtouch/soundtouch.git externals/soundtouch
-git clone https://github.com/catchorg/Catch2 externals/catch2
-rm -rf externals/dynarmic/ externals/xbyak/
-git clone https://github.com/merryhime/dynarmic.git externals/dynarmic
-git clone https://github.com/herumi/xbyak.git externals/xbyak
-rm -rf externals/fmt/ externals/enet/
-git clone https://github.com/fmtlib/fmt.git externals/fmt
-git clone https://github.com/lsalzman/enet.git externals/enet
-rm -rf externals/inih/inih/ externals/libressl/
-git clone https://github.com/benhoyt/inih.git externals/inih/inih
-git clone https://github.com/citra-emu/ext-libressl-portable.git externals/libressl
-rm -rf externals/libusb/libusb/ externals/cubeb/
-git clone https://github.com/libusb/libusb.git externals/libusb/libusb
-git clone https://github.com/mozilla/cubeb externals/cubeb
-rm -rf  externals/discord-rpc/ externals/cpp-jwt/
-git clone https://github.com/discord/discord-rpc.git externals/discord-rpc
-git clone https://github.com/arun11299/cpp-jwt.git externals/cpp-jwt
-rm -rf externals/teakra/ externals/lodepng/lodepng/
-git clone https://github.com/wwylele/teakra.git externals/teakra
-git clone https://github.com/lvandeve/lodepng.git externals/lodepng/lodepng
-rm -rf externals/zstd/ externals/libyuv/
-git clone https://github.com/facebook/zstd.git externals/zstd
-git clone https://github.com/lemenkov/libyuv.git externals/libyuv
-rm -rf externals/sdl2/SDL/ externals/cryptopp-cmake/
-git clone https://github.com/libsdl-org/SDL externals/sdl2/SDL
-git clone https://github.com/abdes/cryptopp-cmake.git externals/cryptopp-cmake
-rm -rf externals/cryptopp/ externals/dds-ktx/
-git clone https://github.com/weidai11/cryptopp.git externals/cryptopp
-git clone https://github.com/septag/dds-ktx externals/dds-ktx
-rm -rf externals/openal-soft/ externals/glslang/
-git clone https://github.com/kcat/openal-soft externals/openal-soft
-git clone https://github.com/KhronosGroup/glslang externals/glslang
-rm -rf externals/vma/ externals/vulkan-headers/ externals/sirit/
-git clone https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator externals/vma
-git clone https://github.com/KhronosGroup/Vulkan-Headers externals/vulkan-headers
-git clone https://github.com/yuzu-emu/sirit externals/sirit
-mkdir -p rpmbuildcmake
-pushd rpmbuildcmake
+git clone --branch nightly-1920 --recursive https://github.com/citra-emu/citra-nightly.git citra-unified-source-20230607-238a574
+mkdir -p citra-unified-source-20230607-238a574/rpmbuildcmake
+pushd citra-unified-source-20230607-238a574/rpmbuildcmake
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 %cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
@@ -166,7 +125,7 @@ pushd rpmbuildcmake
 popd
 
 %install
-pushd rpmbuildcmake
+pushd citra-unified-source-20230607-238a574/rpmbuildcmake
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 %cmake3_install
