@@ -113,30 +113,43 @@ The Canary build is based on the master branch, but with additional features sti
 
 
 %build
+rm -rf externals/boost/* externals/nihstro/*
 git clone https://github.com/citra-emu/ext-boost.git externals/boost
 git clone https://github.com/neobrain/nihstro.git externals/nihstro
+rm -rf externals/soundtouch/* externals/catch2/*
 git clone https://codeberg.org/soundtouch/soundtouch.git externals/soundtouch
 git clone https://github.com/catchorg/Catch2 externals/catch2
+rm -rf externals/dynarmic/* externals/xbyak/*
 git clone https://github.com/merryhime/dynarmic.git externals/dynarmic
 git clone https://github.com/herumi/xbyak.git externals/xbyak
+rm -rf externals/fmt/* externals/enet/*
 git clone https://github.com/fmtlib/fmt.git externals/fmt
 git clone https://github.com/lsalzman/enet.git externals/enet
+rm -rf externals/inih/inih/* externals/libressl/*
 git clone https://github.com/benhoyt/inih.git externals/inih/inih
 git clone https://github.com/citra-emu/ext-libressl-portable.git externals/libressl
+rm -rf externals/libusb/libusb/* externals/cubeb/*
 git clone https://github.com/libusb/libusb.git externals/libusb/libusb
 git clone https://github.com/mozilla/cubeb externals/cubeb
+rm -rf  externals/discord-rpc/* externals/cpp-jwt/*
 git clone https://github.com/discord/discord-rpc.git externals/discord-rpc
 git clone https://github.com/arun11299/cpp-jwt.git externals/cpp-jwt
+rm -rf externals/teakra/* externals/lodepng/lodepng/*
 git clone https://github.com/wwylele/teakra.git externals/teakra
 git clone https://github.com/lvandeve/lodepng.git externals/lodepng/lodepng
+rm -rf externals/zstd/* externals/libyuv/*
 git clone https://github.com/facebook/zstd.git externals/zstd
 git clone https://github.com/lemenkov/libyuv.git externals/libyuv
+rm -rf externals/sdl2/SDL/* externals/cryptopp-cmake/*
 git clone https://github.com/libsdl-org/SDL externals/sdl2/SDL
 git clone https://github.com/abdes/cryptopp-cmake.git externals/cryptopp-cmake
+rm -rf externals/cryptopp/* externals/dds-ktx/*
 git clone https://github.com/weidai11/cryptopp.git externals/cryptopp
 git clone https://github.com/septag/dds-ktx externals/dds-ktx
+rm -rf externals/openal-soft/* externals/glslang/*
 git clone https://github.com/kcat/openal-soft externals/openal-soft
 git clone https://github.com/KhronosGroup/glslang externals/glslang
+rm -rf externals/vma/* externals/vulkan-headers/* externals/sirit/*
 git clone https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator externals/vma
 git clone https://github.com/KhronosGroup/Vulkan-Headers externals/vulkan-headers
 git clone https://github.com/yuzu-emu/sirit externals/sirit
