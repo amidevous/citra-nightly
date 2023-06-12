@@ -19,7 +19,7 @@ BuildRequires:  cmake extra-cmake-modules
 %if 0%{?fedora}
 BuildRequires:  libcxx-devel
 %endif
-BuildRequires:  gcc gcc-c++ make automake autoconf rpm-build
+BuildRequires:  gcc gcc-c++ make automake autoconf rpm-build git
 BuildRequires:  clang
 # SDL2-devel or libSDL2-devel dependency with pkgconfig
 BuildRequires:  pkgconfig(sdl2)
