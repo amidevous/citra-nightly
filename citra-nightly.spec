@@ -20,7 +20,7 @@ BuildRequires:  cmake extra-cmake-modules
 BuildRequires:  libcxx-devel
 %endif
 BuildRequires:  gcc gcc-c++ make automake autoconf rpm-build git
-BuildRequires:  clang
+BuildRequires:  clang pkgconfig(dbus-1)
 # SDL2-devel or libSDL2-devel dependency with pkgconfig
 BuildRequires:  pkgconfig(sdl2)
 # openssl devel package name for all system
