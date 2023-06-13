@@ -13,7 +13,6 @@ URL:            https://github.com/citra-emu/citra-nightly
 # mkdir -p $(rpm --eval %{_topdir})/SOURCES/
 # touch $(rpm --eval %{_topdir})/SOURCES/nosource
 Source0:        nosource
-NoSource:       0
 
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
@@ -112,8 +111,6 @@ Citra has two main release channels: Nightly and Canary
 The Nightly build is based on the master branch, and contains already reviewed and tested features
 The Canary build is based on the master branch, but with additional features still under review. PRs tagged canary-merge are merged only into the Canary builds.
 
-%prep
-%autosetup -p1 -n citra-nightly-nightly-1920
 
 %build
 cd %{_builddir}
