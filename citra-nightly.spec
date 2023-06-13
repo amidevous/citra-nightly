@@ -1,4 +1,4 @@
-%undefine _auto_set_build_flags
+#%undefine _auto_set_build_flags
 # Buildrequire using pkgconfig dependency
 # for spec file work for Fedora CentOs Red Hat Entreprise and Open Suse
 # + spec file conditional for use cmake 3 for old system including cmake 2 and cmake 3
@@ -9,10 +9,7 @@ Summary:        Citra is the world's most popular, open-source, 3DS emulator.
 
 License:        GPLv2
 URL:            https://github.com/citra-emu/citra-nightly
-# if file nosource not found use this command to create
-# mkdir -p $(rpm --eval %{_topdir})/SOURCES/
-# touch $(rpm --eval %{_topdir})/SOURCES/nosource
-Source0:        nosource
+Source0:        https://raw.githubusercontent.com/amidevous/citra-nightly/master/citra-nightly.spec
 
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
@@ -120,20 +117,50 @@ mkdir -p %{_builddir}/citra-nightly/build
 cd %{_builddir}/citra-nightly/build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
-cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
-cmake3 --build .
+%{set_build_flags}
+cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
+-DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
+-DOPENSL_LIBRARY=%{_libdir} \
+-DCMAKE_INSTALL_PREFIX=/opt/citra-nightly
+-S ".." \
+-B "redhat-linux-build" \
+-DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
+-DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
+-DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
+-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+-DCMAKE_INSTALL_DO_STRIP:BOOL=OFF \
+%if "%{?_lib}" == "lib64"
+-DLIB_SUFFIX=64 \
+%endif
+-DBUILD_SHARED_LIBS:BOOL=ON
+cmake3 --build . %{?_smp_mflags} --verbose
 %else
-cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
-cmake --build .
+%{set_build_flags}
+cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
+-DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
+-DOPENSL_LIBRARY=%{_libdir} \
+-DCMAKE_INSTALL_PREFIX=/opt/citra-nightly
+-S ".." \
+-B "redhat-linux-build" \
+-DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
+-DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
+-DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
+-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+-DCMAKE_INSTALL_DO_STRIP:BOOL=OFF \
+%if "%{?_lib}" == "lib64"
+-DLIB_SUFFIX=64 \
+%endif
+-DBUILD_SHARED_LIBS:BOOL=ON
+cmake --build . %{?_smp_mflags} --verbose
 %endif
 
 %install
 cd %{_builddir}/citra-nightly/build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
-cmake3 --install
+DESTDIR="%{buildroot}" cmake3 --install .
 %else
-cmake --install
+DESTDIR="%{buildroot}" cmake --install .
 %endif
 cd %{_builddir}
 rm -rf %{_builddir}/citra-nightly
