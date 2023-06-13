@@ -124,8 +124,6 @@ cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
 -DOPENSL_LIBRARY=%{_libdir} \
 -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly \
--S "../" \
--B "redhat-linux-build" \
 -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
 -DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
 -DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
@@ -134,8 +132,8 @@ cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 %if "%{?_lib}" == "lib64"
 -DLIB_SUFFIX=64 \
 %endif
--DBUILD_SHARED_LIBS:BOOL=ON
-cd ..
+-DBUILD_SHARED_LIBS:BOOL=ON \
+../
 cmake3 --build . %{?_smp_mflags} --verbose
 %else
 #cmake build based to export macros file
@@ -145,8 +143,6 @@ cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
 -DOPENSL_LIBRARY=%{_libdir} \
 -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly \
--S "../" \
--B "redhat-linux-build" \
 -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
 -DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
 -DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
@@ -155,8 +151,8 @@ cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 %if "%{?_lib}" == "lib64"
 -DLIB_SUFFIX=64 \
 %endif
--DBUILD_SHARED_LIBS:BOOL=ON
-cd ..
+-DBUILD_SHARED_LIBS:BOOL=ON \
+../
 cmake --build . %{?_smp_mflags} --verbose
 %endif
 
