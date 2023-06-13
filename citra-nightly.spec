@@ -113,10 +113,12 @@ The Canary build is based on the master branch, but with additional features sti
 cd %{_builddir}
 rm -rf %{_builddir}/citra-unified-source-20230607-238a574 %{_builddir}/citra-nightly
 git clone --branch nightly-1920 --recursive https://github.com/citra-emu/citra-nightly.git
-mkdir -p %{_builddir}/citra-nightly/build
-cd %{_builddir}/citra-nightly/build
+mkdir -p %{_builddir}/citra-nightly/redhat-linux-build
+cd %{_builddir}/citra-nightly/redhat-linux-build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
+#cmake3 build based to export macros file
+# /usr/lib/rpm/macros.d/macros.cmake3
 %{set_build_flags}
 cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
@@ -135,6 +137,8 @@ cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DBUILD_SHARED_LIBS:BOOL=ON
 cmake3 --build . %{?_smp_mflags} --verbose
 %else
+#cmake build based to export macros file
+# /usr/lib/rpm/macros.d/macros.cmake
 %{set_build_flags}
 cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
