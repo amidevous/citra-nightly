@@ -9,7 +9,7 @@ Summary:        Citra is the world's most popular, open-source, 3DS emulator.
 License:        GPLv2
 URL:            https://github.com/citra-emu/citra-nightly
 #Source0:        https://github.com/citra-emu/citra-nightly/releases/download/nightly-1920/citra-unified-source-20230607-238a574.tar.xz
-NoSource:       0
+NoSource:       
 
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
