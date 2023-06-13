@@ -114,19 +114,19 @@ The Canary build is based on the master branch, but with additional features sti
 cd %{_builddir}
 rm -rf %{_builddir}/citra-unified-source-20230607-238a574 %{_builddir}/citra-nightly
 git clone --branch nightly-1920 --recursive https://github.com/citra-emu/citra-nightly.git
-mkdir -p %{_builddir}/citra-nightly/rpmbuildcmake
-cd %{_builddir}/citra-nightly/rpmbuildcmake
+mkdir -p %{_builddir}/citra-nightly/build
+cd %{_builddir}/citra-nightly/build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
-%cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
+cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
 %cmake3_build
 %else
-%cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
+cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
 %cmake_build
 %endif
 
 %install
-cd %{_builddir}/citra-nightly/rpmbuildcmake
+cd %{_builddir}/citra-nightly/build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 %cmake3_install
