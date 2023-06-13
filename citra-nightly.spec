@@ -118,19 +118,19 @@ cd %{_builddir}/citra-nightly/build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
-%cmake3_build
+cmake3 --build .
 %else
 cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
-%cmake_build
+cmake --build .
 %endif
 
 %install
 cd %{_builddir}/citra-nightly/build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
-%cmake3_install
+cmake3 --install
 %else
-%cmake_install
+cmake --install
 %endif
 cd %{_builddir}
 rm -rf %{_builddir}/citra-unified-source-20230607-238a574 %{_builddir}/citra-nightly
