@@ -121,7 +121,7 @@ cd %{_builddir}/citra-nightly/build
 cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
 -DOPENSL_LIBRARY=%{_libdir} \
--DCMAKE_INSTALL_PREFIX=/opt/citra-nightly
+-DCMAKE_INSTALL_PREFIX=/opt/citra-nightly \
 -S "../" \
 -B "redhat-linux-build" \
 -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
@@ -139,7 +139,7 @@ cmake3 --build . %{?_smp_mflags} --verbose
 cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} \
 -DOPENSL_LIBRARY=%{_libdir} \
--DCMAKE_INSTALL_PREFIX=/opt/citra-nightly
+-DCMAKE_INSTALL_PREFIX=/opt/citra-nightly \
 -S "../" \
 -B "redhat-linux-build" \
 -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
