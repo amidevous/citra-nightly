@@ -8,7 +8,7 @@ Summary:        Citra is the world's most popular, open-source, 3DS emulator.
 
 License:        GPLv2
 URL:            https://github.com/citra-emu/citra-nightly
-Source0:        https://github.com/citra-emu/citra-nightly/releases/download/nightly-1920/citra-unified-source-20230607-238a574.tar.xz
+#Source0:        https://github.com/citra-emu/citra-nightly/releases/download/nightly-1920/citra-unified-source-20230607-238a574.tar.xz
 NoSource:       0
 
 # use cmake or cmake 3 package conditional
@@ -111,9 +111,10 @@ The Canary build is based on the master branch, but with additional features sti
 
 
 %build
-git clone --branch nightly-1920 --recursive https://github.com/citra-emu/citra-nightly.git citra-unified-source-20230607-238a574
-mkdir -p citra-unified-source-20230607-238a574/rpmbuildcmake
-pushd citra-unified-source-20230607-238a574/rpmbuildcmake
+cd %{_builddir}
+git clone --branch nightly-1920 --recursive https://github.com/citra-emu/citra-nightly.git %{_builddir}/citra-unified-source-20230607-238a574
+mkdir -p %{_builddir}/citra-unified-source-20230607-238a574/rpmbuildcmake
+pushd %{_builddir}/citra-unified-source-20230607-238a574/rpmbuildcmake
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 %cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl  -DOPENSL_ANDROID_INCLUDE_DIR=%{_libdir} -DOPENSL_LIBRARY=%{_libdir} -DCMAKE_INSTALL_PREFIX=/opt/citra-nightly ../
@@ -125,7 +126,7 @@ pushd citra-unified-source-20230607-238a574/rpmbuildcmake
 popd
 
 %install
-pushd citra-unified-source-20230607-238a574/rpmbuildcmake
+pushd %{_builddir}/citra-unified-source-20230607-238a574/rpmbuildcmake
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 %cmake3_install
