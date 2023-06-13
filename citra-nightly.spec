@@ -135,6 +135,7 @@ cmake3 -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DLIB_SUFFIX=64 \
 %endif
 -DBUILD_SHARED_LIBS:BOOL=ON
+cd ..
 cmake3 --build . %{?_smp_mflags} --verbose
 %else
 #cmake build based to export macros file
@@ -155,11 +156,12 @@ cmake -DOPENSL_INCLUDE_DIR=%{_includedir}/openssl \
 -DLIB_SUFFIX=64 \
 %endif
 -DBUILD_SHARED_LIBS:BOOL=ON
+cd ..
 cmake --build . %{?_smp_mflags} --verbose
 %endif
 
 %install
-cd %{_builddir}/citra-nightly/build
+cd %{_builddir}/citra-nightly/redhat-linux-build
 # use cmake or cmake 3 package conditional
 %if 0%{?fedora} <= 19 || 0%{?rhel} <= 8
 DESTDIR="%{buildroot}" cmake3 --install .
